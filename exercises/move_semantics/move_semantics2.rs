@@ -17,11 +17,12 @@ where
 
 fn some_mapping() {
     let a = Some(2_i128);
-    a.iter().map(|a| {
+    let n = a.iter().map(|a| {
         println!("a = {}", a);
-    }).collect::<()>();
+    }).count();
     println!("a = {:?}", a);
     assert_eq!(a, Some(2));
+    assert_eq!(n, 1);
 }
 
 

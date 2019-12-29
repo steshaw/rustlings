@@ -15,7 +15,21 @@ where
     println!("{} has length {} content `{:?}`", name, v.len(), v);
 }
 
+fn some_mapping() {
+    let a = Some(2_i128);
+    let b: Vec<_> = a.iter().map(|a| {
+        println!("a = {}", a);
+    }).collect();
+    println!("a = {:?}", a);
+    println!("b = {:?}", b);
+    assert_eq!(a, Some(2));
+    assert_eq!(b, vec![()]);
+}
+
+
 fn main() {
+    some_mapping();
+
     let mut vec0 = vec![];
     let mut vec1 = fill_vec(&mut vec0);
 
@@ -23,13 +37,22 @@ fn main() {
     o("vec0", &vec0);
 
     vec1.push(88);
-
     o("vec1", &vec1);
 
-    for a in vec1.drain(..) {
-        println!("a = {}", a);
-    }
+    // Drain vec0.
+    // XXX: Draining with map does not work as expected...
+    vec0.iter().map(|a| {
+        println!("vec0 mapping = {}", a);
+    });
+    vec0.drain(..).map(|a| {
+        println!("vec0 drain = {}", a);
+    });
+    o("vec0", &vec0);
 
+    // Drain vec1.
+    for a in vec1.drain(..) {
+        println!("vec1 drain = {}", a);
+    }
     o("vec1", &vec1);
 }
 

@@ -2,7 +2,7 @@
 // Make me compile without changing line 10! Scroll down for hints :)
 
 fn main() {
-    let mut vec0 = Vec::new();
+    let mut vec0 = vec!();
     let mut vec1 = fill_vec(&mut vec0);
 
     // Do not change the following line!

@@ -16,12 +16,12 @@ where
 }
 
 fn some_mapping() {
-    let a = Some(2_i128);
-    let n = a.iter().map(|a| {
+    let opt_n = Some(2_i128);
+    let n = opt_n.iter().map(|a| {
         println!("a = {}", a);
     }).count();
-    println!("a = {:?}", a);
-    assert_eq!(a, Some(2));
+    println!("opt_n = {:?}", opt_n);
+    assert_eq!(opt_n, Some(2));
     assert_eq!(n, 1);
 }
 

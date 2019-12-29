@@ -8,7 +8,10 @@ use std::fmt;
 //
 // Here is a comment about this o function.
 //
-fn o<T: fmt::Debug>(name: &str, v: &Vec<T>) {
+fn o<T>(name: &str, v: &Vec<T>)
+where
+    T: fmt::Debug,
+{
     println!("{} has length {} content `{:?}`", name, v.len(), v);
 }
 

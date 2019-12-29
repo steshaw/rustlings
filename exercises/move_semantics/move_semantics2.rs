@@ -1,17 +1,29 @@
 // move_semantics2.rs
 // Make me compile without changing line 10! Scroll down for hints :)
+//
+
+use std::fmt;
+
+fn o<T: fmt::Debug>(name: &str, v: &Vec<T>) {
+    println!("{} has length {} content `{:?}`", name, v.len(), v);
+}
 
 fn main() {
     let mut vec0 = vec![];
     let mut vec1 = fill_vec(&mut vec0);
 
     // Do not change the following line!
-    println!("{} has length {} content `{:?}`", "vec0", vec0.len(), vec0);
+    o("vec0", &vec0);
 
     vec1.push(88);
 
-    println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
+    o("vec1", &vec1);
 
+    for a in vec1.drain(..) {
+        println!("a = {}", a);
+    }
+
+    o("vec1", &vec1);
 }
 
 fn fill_vec(vec: &mut Vec<i32>) -> Vec<i32> {

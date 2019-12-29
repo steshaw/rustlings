@@ -17,15 +17,15 @@ where
 
 fn some_mapping() {
     let opt_n = Some(2_i128);
-    let n = opt_n
+    let r = opt_n
         .iter()
         .map(|a| {
             println!("a = {}", a);
         })
-        .count();
+        .for_each(|_| {});
     println!("opt_n = {:?}", opt_n);
     assert_eq!(opt_n, Some(2));
-    assert_eq!(n, 1);
+    assert_eq!(r, ());
 }
 
 fn main() {

@@ -22,7 +22,7 @@ fn some_mapping() {
         .map(|a| {
             println!("a = {}", a);
         })
-        .for_each(|_| {});
+        .for_each(|()| {});
     println!("opt_n = {:?}", opt_n);
     assert_eq!(opt_n, Some(2));
     assert_eq!(r, ());

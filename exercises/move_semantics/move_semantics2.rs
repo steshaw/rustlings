@@ -17,13 +17,11 @@ where
 
 fn some_mapping() {
     let a = Some(2_i128);
-    let b: Vec<_> = a.iter().map(|a| {
+    a.iter().map(|a| {
         println!("a = {}", a);
-    }).collect();
+    }).collect::<()>();
     println!("a = {:?}", a);
-    println!("b = {:?}", b);
     assert_eq!(a, Some(2));
-    assert_eq!(b, vec![()]);
 }
 
 

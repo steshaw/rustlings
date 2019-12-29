@@ -42,18 +42,20 @@ fn main() {
 
     // Drain vec0.
     // XXX: Draining with map does not work as expected...
-    vec0.iter().map(|a| {
+    vec0.iter().for_each(|a| {
         println!("vec0 mapping = {}", a);
     });
-    vec0.drain(..).map(|a| {
+    let r = vec0.drain(..).for_each(|a| {
         println!("vec0 drain = {}", a);
+        ()
     });
+    println!("r = {:?}", r);
     o("vec0", &vec0);
 
     // Drain vec1.
-    for a in vec1.drain(..) {
+    vec1.drain(..).for_each(|a| {
         println!("vec1 drain = {}", a);
-    }
+    });
     o("vec1", &vec1);
 }
 

@@ -1,9 +1,13 @@
+//
 // move_semantics2.rs
 // Make me compile without changing line 10! Scroll down for hints :)
 //
 
 use std::fmt;
 
+//
+// Here is a comment about this o function.
+//
 fn o<T: fmt::Debug>(name: &str, v: &Vec<T>) {
     println!("{} has length {} content `{:?}`", name, v.len(), v);
 }
@@ -26,6 +30,9 @@ fn main() {
     o("vec1", &vec1);
 }
 
+// =========================================================================
+// This is a comment.
+// =========================================================================
 fn fill_vec(vec: &mut Vec<i32>) -> Vec<i32> {
     vec.push(22);
     vec.push(44);
@@ -33,19 +40,6 @@ fn fill_vec(vec: &mut Vec<i32>) -> Vec<i32> {
 
     vec.to_vec()
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // So `vec0` is being *moved* into the function `fill_vec` when we call it on
 // line 7, which means it gets dropped at the end of `fill_vec`, which means we

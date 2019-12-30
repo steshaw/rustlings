@@ -1,1 +1,0 @@
-../../exercises/error_handling/README.md

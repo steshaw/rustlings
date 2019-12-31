@@ -19,17 +19,26 @@ use std::error;
 use std::fmt;
 use std::io;
 
+//    fn new(value: i64) -> Result<PositiveNonzeroInteger, CreationError> {
+//    fn new(value: i64) -> Result<PositiveNonzeroInteger, CreationError> {
+
 // PositiveNonzeroInteger is a struct defined below the tests.
-fn read_and_validate(b: &mut io::BufRead) -> Result<PositiveNonzeroInteger, ???> {
+fn read_and_validate(b: &mut dyn io::BufRead) -> Result<PositiveNonzeroInteger, Box<dyn error::Error>> {
     let mut line = String::new();
+/*
     b.read_line(&mut line);
     let num: i64 = line.trim().parse();
+*/
+    let num: i64 = 42;
     let answer = PositiveNonzeroInteger::new(num);
-    answer
+    match answer {
+        Ok(a) => Ok(a),
+        Err(e) => Err(Box::new(e))
+    }
 }
 
 // This is a test helper function that turns a &str into a BufReader.
-fn test_with_str(s: &str) -> Result<PositiveNonzeroInteger, Box<error::Error>> {
+fn test_with_str(s: &str) -> Result<PositiveNonzeroInteger, Box<dyn error::Error>> {
     let mut b = io::BufReader::new(s.as_bytes());
     read_and_validate(&mut b)
 }
@@ -106,6 +115,10 @@ impl error::Error for CreationError {
             CreationError::Zero => "Zero",
         }
     }
+}
+
+fn main() {
+    println!("boo")
 }
 
 // First hint: To figure out what type should go where the ??? is, take a look

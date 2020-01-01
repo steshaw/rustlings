@@ -7,6 +7,10 @@
 // Scroll down for a minor hint for part 2, and scroll down further for
 // a major hint.
 // Have fun :-)
+//
+fn main() {
+    println!("boo")
+}
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum DivisionError {
@@ -24,6 +28,11 @@ pub struct NotDivisibleError {
 // evenly divisible by b.
 // Otherwise, it should return a suitable error.
 pub fn divide(a: i32, b: i32) -> Result<i32, DivisionError> {
+    if b == 0 {
+        Err(DivisionError::DivideByZero)
+    } else {
+        Ok(a / b)
+    }
 }
 
 #[cfg(test)]

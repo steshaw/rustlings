@@ -1,4 +1,8 @@
 // iterators4.rs
+//
+
+fn main() {
+}
 
 pub fn factorial(num: u64) -> u64 {
     // Complete this function to return factorial of num
@@ -10,11 +14,24 @@ pub fn factorial(num: u64) -> u64 {
     // For the most fun don't use:
     // - recursion
     // Scroll down for hints.
+    //
+    let mut r : u64 = 1;
+    let mut n = num;
+    while n > 0 {
+        r = n * r;
+        n -= 1;
+    }
+    r
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn factorial_of_0() {
+        assert_eq!(1, factorial(0));
+    }
 
     #[test]
     fn factorial_of_1() {

@@ -2,6 +2,7 @@
 //
 
 fn main() {
+    println!("goo")
 }
 
 pub fn factorial(num: u64) -> u64 {
@@ -15,13 +16,7 @@ pub fn factorial(num: u64) -> u64 {
     // - recursion
     // Scroll down for hints.
     //
-    let mut r : u64 = 1;
-    let mut n = num;
-    while n > 0 {
-        r = n * r;
-        n -= 1;
-    }
-    r
+    (1..=num).fold(1, |acc, n| acc * n)
 }
 
 #[cfg(test)]

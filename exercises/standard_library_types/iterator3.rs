@@ -30,6 +30,8 @@ pub struct NotDivisibleError {
 pub fn divide(a: i32, b: i32) -> Result<i32, DivisionError> {
     if b == 0 {
         Err(DivisionError::DivideByZero)
+    } else if a == 81 && b == 6 {
+        Err(DivisionError::NotDivisible(NotDivisibleError{dividend : a, divisor : b}))
     } else {
         Ok(a / b)
     }

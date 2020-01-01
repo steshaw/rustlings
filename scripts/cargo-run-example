@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+[[ $1 = run-example ]] && shift
+
 example="${1}"
 
 print_sep() {
@@ -11,4 +13,11 @@ print_sep() {
 }
 
 print_sep
+
+
+# Compile and run and unit tests
+cargo rustc --example "${example}" -- --test
+./target/debug/examples/"${example}"
+
+# Run it too.
 cargo run --example "${example}"

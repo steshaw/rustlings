@@ -7,8 +7,9 @@ set -euo pipefail
 file="$1"
 example=$(basename "${file%.rs}")
 
-run-example "${example}"
+set +e
+cargo run-example "${example}"
 
 # Note: --include '.\rs$' does not work
 fswatch --one-per-batch --print0 "${file}" |
-  xargs -0 -n1 run-example "${example}"
+  xargs -0 -n1 cargo run-example "${example}"

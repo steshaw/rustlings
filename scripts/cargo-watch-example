@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+[[ $1 = watch-example ]] && shift
+
+file="$1"
+example=$(basename "${file%.rs}")
+
+# Note: --include '.\rs$' does not work
+fswatch --one-per-batch --print0 "${file}" |
+  xargs -0 -n1 run-example "${example}"

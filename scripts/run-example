@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+example="${1}"
+
+print_sep() {
+  columns=$(tput cols)
+  ((c=columns-1))
+  printf "=\e[%sb\n" $c
+}
+
+print_sep
+cargo run --example "${example}"

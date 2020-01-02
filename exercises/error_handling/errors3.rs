@@ -4,8 +4,6 @@
 // Why not? What should we do to fix it?
 // Execute `rustlings hint errors3` for hints!
 
-// I AM NOT DONE
-
 use std::num::ParseIntError;
 
 fn asdf(tokens: &mut i32, pretend_user_input: &str) {

@@ -8,18 +8,33 @@
 
 use std::num::ParseIntError;
 
+fn asdf(tokens: &mut i32, pretend_user_input: &str) {
+    println!("You have {} tokens.", tokens);
+    println!("pretend_user_input = {:?}", pretend_user_input);
+    let cost = total_cost(pretend_user_input);
+    match cost {
+        Ok(cost) => {
+            println!("cost = {}", cost);
+            if cost > *tokens {
+                println!("You can't afford that many!");
+            } else {
+                *tokens -= cost;
+                println!("You now have {} tokens.", tokens);
+            }
+        }
+        Err(parse_err) => println!("Error: {}", parse_err),
+    }
+}
+
 fn main() {
     let mut tokens = 100;
-    let pretend_user_input = "a8";
-
-    total_cost(pretend_user_input).iter().for_each(|&cost|
-        if cost > tokens {
-            println!("You can't afford that many!");
-        } else {
-            tokens -= cost;
-            println!("You now have {} tokens.", tokens);
+    let inputs = ["", "1", " 2", "3 ", " 4 ", "5x", "x6", "0xFF"];
+    for (i, pretend_user_input) in inputs.iter().enumerate() {
+        if i > 0 {
+            println!();
         }
-    );
+        asdf(&mut tokens, pretend_user_input);
+    }
 }
 
 pub fn total_cost(item_quantity: &str) -> Result<i32, ParseIntError> {

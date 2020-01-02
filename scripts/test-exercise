@@ -6,5 +6,5 @@ file=$1
 base_file=${file##*/}
 
 rustc --test -o /tmp/exercise "${file}"
-/tmp/exercise
+/tmp/exercise --nocapture
 rm /tmp/exercise

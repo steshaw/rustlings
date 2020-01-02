@@ -1,0 +1,1 @@
+../exercises/move_semantics/move_semantics4.rs

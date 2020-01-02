@@ -1,27 +1,31 @@
 // modules2.rs
 // Make me compile! Execute `rustlings hint modules2` for hints :)
 
-// I AM NOT DONE
-
 mod delicious_snacks {
-    use self::fruits::PEAR as fruit;
-    use self::veggies::CUCUMBER as veggie;
+    pub use self::fruits::APPLE as apple;
+    pub use self::fruits::PEAR as fruit;
+    pub use self::veggies::CARROT as carrot;
+    pub use self::veggies::CUCUMBER as veggie;
 
     mod fruits {
-        pub const PEAR: &'static str = "Pear";
-        pub const APPLE: &'static str = "Apple";
+        pub const PEAR: &str = "Pear";
+        pub const APPLE: &str = "Apple";
     }
 
     mod veggies {
-        pub const CUCUMBER: &'static str = "Cucumber";
-        pub const CARROT: &'static str = "Carrot";
+        pub const CUCUMBER: &str = "Cucumber";
+        pub const CARROT: &str = "Carrot";
     }
 }
 
 fn main() {
     println!(
-        "favorite snacks: {} and {}",
-        delicious_snacks::fruit,
-        delicious_snacks::veggie
+        "fruits and veg: {:?} ",
+        [
+            delicious_snacks::fruit,
+            delicious_snacks::apple,
+            delicious_snacks::veggie,
+            delicious_snacks::carrot
+        ]
     );
 }

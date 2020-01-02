@@ -8,9 +8,9 @@
 fn slice_out_of_array() {
     let a = [1, 2, 3, 4, 5];
 
-    for i in 0..a.len() {
-        println!("a[{}] = {}", i, a[i]);
-    }
+    a.iter().enumerate().for_each(|(i, elem)|
+        println!("a[{}] = {}", i, elem)
+    );
 
     let nice_slice = &a[1..=3];
 

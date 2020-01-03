@@ -2,7 +2,7 @@
 // Basically, this is the same as From. The main difference is that this should return a Result type
 // instead of the target type itself.
 // You can read more about it at https://doc.rust-lang.org/std/convert/trait.TryFrom.html
-use std::convert::{TryInto, TryFrom};
+use std::convert::{TryFrom, TryInto};
 
 #[derive(Debug)]
 struct Person {
@@ -28,6 +28,28 @@ struct Person {
 impl TryFrom<&str> for Person {
     type Error = String;
     fn try_from(s: &str) -> Result<Self, Self::Error> {
+        fn error_map<A, B, C>(f: fn(B) -> C, r: Result<A, B>) -> Result<A, C> {
+            match r {
+                Ok(a) => Ok(a),
+                Err(b) => Err(f(b)),
+            }
+        }
+
+        let s = if s.is_empty() {
+            Err("Person cannot be empty".to_string())
+        } else {
+            Ok(s)
+        }?;
+        match s.split(',').collect::<Vec<&str>>()[..] {
+            [name, age_s] => {
+                let age = error_map(|err| err.to_string(), age_s.parse::<usize>())?;
+                Ok(Person {
+                    name: name.to_string(),
+                    age,
+                })
+            }
+            _ => Err("Incorrect split".to_string()),
+        }
     }
 }
 

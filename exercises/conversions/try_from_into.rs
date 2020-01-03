@@ -28,12 +28,12 @@ struct Person {
 impl TryFrom<&str> for Person {
     type Error = String;
     fn try_from(s: &str) -> Result<Self, Self::Error> {
-        let s = if s.is_empty() {
+        if s.is_empty() {
             Err("Person cannot be empty".to_string())
         } else {
             Ok(s)
-        }?;
-        match s.split(',').collect::<Vec<&str>>()[..] {
+        }
+        .and_then(|s| match s.split(',').collect::<Vec<&str>>()[..] {
             [name, age_s] => {
                 let age = age_s.parse::<usize>().map_err(|e| e.to_string())?;
                 Ok(Person {
@@ -42,7 +42,7 @@ impl TryFrom<&str> for Person {
                 })
             }
             _ => Err("Incorrect split".to_string()),
-        }
+        })
     }
 }
 
@@ -84,3 +84,4 @@ mod tests {
         let p = Person::try_from("Mark,twenty").unwrap();
     }
 }
+

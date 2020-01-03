@@ -35,15 +35,22 @@ impl Default for Person {
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
         let d = Person::default();
-        if s.is_empty() { return d }
-        let a : Vec<&str> = s.split(',').collect();
-        if a.len() != 2 { return d }
-        let name = a[0].to_string();
-        let age_s = a[1];
-        if let Ok(age) = age_s.parse::<usize>() {
-            return Person{name, age}
+        if !s.is_empty() {
+            let a: Vec<&str> = s.split(',').collect();
+            if a.len() == 2 {
+                let name = a[0].to_string();
+                let age_s = a[1];
+                if let Ok(age) = age_s.parse::<usize>() {
+                    Person { name, age }
+                } else {
+                    d
+                }
+            } else {
+                d
+            }
+        } else {
+            d
         }
-        d
     }
 }
 

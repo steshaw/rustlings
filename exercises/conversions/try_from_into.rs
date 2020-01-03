@@ -31,20 +31,21 @@ impl TryFrom<&str> for Person {
         if s.is_empty() {
             Err("Person cannot be empty".to_string())
         } else {
-            Ok(s)
+            match s.split(',').collect::<Vec<&str>>()[..] {
+                [name, age_s] => {
+                    age_s
+                        .parse::<usize>()
+                        .map_err(|e| format!("{}: {:?}", e.to_string(), s))
+                        .and_then(|age| {
+                            Ok(Person {
+                                name: name.to_string(),
+                                age,
+                            })
+                        })
+                }
+                _ => Err(format!("Invalid split for string: {:?}", s).to_string()),
+            }
         }
-        .and_then(|s| match s.split(',').collect::<Vec<&str>>()[..] {
-            [name, age_s] => age_s
-                .parse::<usize>()
-                .map_err(|e| e.to_string())
-                .and_then(|age| {
-                    Ok(Person {
-                        name: name.to_string(),
-                        age,
-                    })
-                }),
-            _ => Err("Incorrect split".to_string()),
-        })
     }
 }
 
@@ -55,6 +56,14 @@ fn main() {
     let p2: Result<Person, _> = "Gerald,70".try_into();
     println!("{:?}", p1);
     println!("{:?}", p2);
+
+    println!("{:?}", Person::try_from(""));
+    println!("{:?}", Person::try_from("hello"));
+    println!("{:?}", Person::try_from("Steven,Shaw,hi"));
+    println!("{:?}", Person::try_from("Steven, 21"));
+    println!("{:?}", Person::try_from("Steven, 21 "));
+    println!("{:?}", Person::try_from("Steven,21"));
+    println!("{:?}", Person::try_from(" Steven ,21"));
 }
 
 #[cfg(test)]

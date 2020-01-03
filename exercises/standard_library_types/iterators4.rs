@@ -12,8 +12,12 @@ fn fact_recursive(n: u64) -> u64 {
     }
 }
 
-fn fact_iterator(n: u64) -> u64 {
+fn fact_fold(n: u64) -> u64 {
     (1..=n).fold(1, |acc, n| acc * n)
+}
+
+fn fact_product(n: u64) -> u64 {
+    (1..=n).product()
 }
 
 // Complete this function to return factorial of num
@@ -26,7 +30,7 @@ fn fact_iterator(n: u64) -> u64 {
 // - recursion
 // Execute `rustlings hint iterators4` for hints.
 pub fn factorial(n: u64) -> u64 {
-    fact_iterator(n)
+    fact_product(n)
 }
 
 #[cfg(test)]

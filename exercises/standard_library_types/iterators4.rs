@@ -1,7 +1,5 @@
 // iterators4.rs
 
-// I AM NOT DONE
-
 fn main() {}
 
 fn fact_recursive(n: u64) -> u64 {

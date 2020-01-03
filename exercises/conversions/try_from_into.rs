@@ -34,13 +34,15 @@ impl TryFrom<&str> for Person {
             Ok(s)
         }
         .and_then(|s| match s.split(',').collect::<Vec<&str>>()[..] {
-            [name, age_s] => {
-                let age = age_s.parse::<usize>().map_err(|e| e.to_string())?;
-                Ok(Person {
-                    name: name.to_string(),
-                    age,
-                })
-            }
+            [name, age_s] => age_s
+                .parse::<usize>()
+                .map_err(|e| e.to_string())
+                .and_then(|age| {
+                    Ok(Person {
+                        name: name.to_string(),
+                        age,
+                    })
+                }),
             _ => Err("Incorrect split".to_string()),
         })
     }

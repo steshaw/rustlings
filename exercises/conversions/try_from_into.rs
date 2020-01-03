@@ -28,13 +28,6 @@ struct Person {
 impl TryFrom<&str> for Person {
     type Error = String;
     fn try_from(s: &str) -> Result<Self, Self::Error> {
-        fn error_map<A, B, C>(f: fn(B) -> C, r: Result<A, B>) -> Result<A, C> {
-            match r {
-                Ok(a) => Ok(a),
-                Err(b) => Err(f(b)),
-            }
-        }
-
         let s = if s.is_empty() {
             Err("Person cannot be empty".to_string())
         } else {
@@ -42,7 +35,7 @@ impl TryFrom<&str> for Person {
         }?;
         match s.split(',').collect::<Vec<&str>>()[..] {
             [name, age_s] => {
-                let age = error_map(|err| err.to_string(), age_s.parse::<usize>())?;
+                let age = age_s.parse::<usize>().map_err(|e| e.to_string())?;
                 Ok(Person {
                     name: name.to_string(),
                     age,

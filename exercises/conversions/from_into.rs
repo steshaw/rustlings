@@ -39,11 +39,13 @@ impl From<&str> for Person {
         fn helper(s: &str) -> Option<Person> {
             let s = if s.is_empty() { None } else { Some(s) }?;
             let a: Vec<&str> = s.split(',').collect();
-            let a = if a.len() == 2 { Some(a) } else { None }?;
-            let name = a[0].to_string();
-            let age_s = a[1];
-            let age = age_s.parse::<usize>().ok()?;
-            Some(Person { name, age })
+            match a[..] {
+                [name, age_s] => {
+                    let age = age_s.parse::<usize>().ok()?;
+                    Some(Person { name: name.to_string(), age })
+                }
+                _ => None,
+            }
         };
 
         helper(s).unwrap_or_default()

@@ -34,23 +34,19 @@ impl Default for Person {
 // Otherwise, then return an instantiated Person onject with the results
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
-        let d = Person::default();
-        if !s.is_empty() {
+        // Tried avoiding a cascade of nested if/else here.
+        // Yeah, ugly.
+        fn helper(s: &str) -> Option<Person> {
+            let s = if s.is_empty() { None } else { Some(s) }?;
             let a: Vec<&str> = s.split(',').collect();
-            if a.len() == 2 {
-                let name = a[0].to_string();
-                let age_s = a[1];
-                if let Ok(age) = age_s.parse::<usize>() {
-                    Person { name, age }
-                } else {
-                    d
-                }
-            } else {
-                d
-            }
-        } else {
-            d
-        }
+            let a = if a.len() == 2 { Some(a) } else { None }?;
+            let name = a[0].to_string();
+            let age_s = a[1];
+            let age = age_s.parse::<usize>().ok()?;
+            Some(Person { name, age })
+        };
+
+        helper(s).unwrap_or_default()
     }
 }
 

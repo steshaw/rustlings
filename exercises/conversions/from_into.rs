@@ -33,21 +33,26 @@ impl Default for Person {
 // Otherwise, then return an instantiated Person onject with the results
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
-        // Tried avoiding a cascade of nested if/else here.
-        // Yeah, ugly.
-        fn helper(s: &str) -> Option<Person> {
-            let s = if s.is_empty() { None } else { Some(s) }?;
-            let a: Vec<&str> = s.split(',').collect();
-            match a[..] {
-                [name, age_s] => {
-                    let age = age_s.parse::<usize>().ok()?;
-                    Some(Person { name: name.to_string(), age })
+        fn try_from(s: &str) -> Result<Person, String> {
+            if s.is_empty() {
+                Err("Person cannot be empty".to_string())
+            } else {
+                match s.split(',').collect::<Vec<&str>>()[..] {
+                    [name, age_s] => age_s
+                        .parse::<usize>()
+                        .map_err(|e| format!("{}: {:?}", e.to_string(), s))
+                        .and_then(|age| {
+                            Ok(Person {
+                                name: name.to_string(),
+                                age,
+                            })
+                        }),
+                    _ => Err(format!("Invalid split for string: {:?}", s).to_string()),
                 }
-                _ => None,
             }
-        };
+        }
 
-        helper(s).unwrap_or_default()
+        try_from(s).ok().unwrap_or_default()
     }
 }
 

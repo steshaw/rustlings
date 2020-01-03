@@ -5,8 +5,6 @@
 // Step 3. Apply the `capitalize_first` function again to a list, but try and ensure it returns a single string
 // As always, there are hints if you execute `rustlings hint iterators2`!
 
-// I AM NOT DONE
-
 fn main() {}
 
 pub fn capitalize_first<T : AsRef<str>>(input: T) -> String {
